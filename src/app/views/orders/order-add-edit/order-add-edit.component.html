@@ -1,0 +1,56 @@
+<h1 matDialogTitle> {{data.title }}</h1>
+
+<form [formGroup]="orderForm" (ngSubmit)="submit()">
+  <div fxLayout="row wrap" fxLayout.lt-sm="column">
+
+
+
+
+    <div fxFlex="50" class="pr-16">
+
+      <mat-form-field class="full-width">
+        <input matInput name="PersonName" [formControl]="orderForm.controls['PersonName']"
+          placeholder="{{'Person Name' }}">
+      </mat-form-field>
+
+      <small *ngIf="orderForm.controls['PersonName'].hasError('required') && orderForm.controls['PersonName'].touched"
+        class="form-error-msg"> {{"Person Name Is Required"}}</small>
+    </div>
+
+    <div fxFlex="50" ass="pb-16" style="margin-top: 1%;">
+      <mat-form-field class="full-width">
+        <mat-label>{{"Stock"}}</mat-label>
+        <mat-select [formControl]="orderForm.controls['StockId']" required>
+
+          <mat-option>
+            <ngx-mat-select-search [placeholderLabel]="('Search With Stock Name')"
+              [noEntriesFoundLabel]="('No Matching Records Found')" [formControl]="controlStock" ngDefaultControl>
+            </ngx-mat-select-search>
+          </mat-option>
+
+          <mat-option>{{"Choose Stock"}}</mat-option>
+          <mat-option *ngFor="let stock of stocks" [value]="stock.id">
+            {{stock.name}}
+
+            &nbsp;
+            <span class="fi mr-8 fi-{{stock.name}}"></span>
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="orderForm.controls['StockId'].hasError('required')">
+          {{"Stock Is Required"}}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field class="full-width" style="margin-top: 1%;">
+      <input matInput name="Quantity" [formControl]="orderForm.controls['Quantity']" placeholder="{{'Quantity' }}">
+      <small *ngIf="orderForm.controls['Quantity'].hasError('required') && orderForm.controls['Quantity'].touched"
+        class="form-error-msg"> {{"Quantity Is Required"}}</small>
+    </mat-form-field>
+
+    <div fxFlex="100" class="mt-16">
+      <button mat-raised-button color="primary" [disabled]="orderForm.invalid">{{"Save" }}</button>
+      <span fxFlex></span>
+      <button mat-button color="warn" type="button" (click)="dialogRef.close(false)">{{"Cancel" }}</button>
+    </div>
+  </div>
+</form>

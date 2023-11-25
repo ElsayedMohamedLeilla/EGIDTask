@@ -1,0 +1,65 @@
+<div class="m-12" [@animate]="{value:'*',params:{y:'50px',delay:'300ms'}}">
+
+  <div class="info-card primary">
+    <div class="description">{{"Orders" }}</div>
+    <button mat-raised-button class="mb-8" color="primary" (click)="Add()">{{"Add Order" }}
+    </button>
+  </div>
+
+
+</div>
+<mat-card class="p-0" [@animate]="{value:'*',params:{y:'50px',delay:'300ms'}}">
+  <mat-card-content class="p-0">
+    <mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+        <mat-cell *matCellDef="let row" data-label="id"> {{row._id}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="personName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> {{"Person Name" }} </mat-header-cell>
+        <mat-cell *matCellDef="let row" data-label="personName">
+          <span class="overme">
+            {{ row.personName}}
+          </span>
+        </mat-cell>
+      </ng-container>
+
+
+      <ng-container matColumnDef="stockName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> {{"Stock Name" }} </mat-header-cell>
+        <mat-cell *matCellDef="let row" data-label="stockName">
+          <span class="overme">
+            {{ row.stockName}}
+          </span>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="quantity">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> {{"Quantity" }} </mat-header-cell>
+        <mat-cell *matCellDef="let row" data-label="quantity">
+          <span class="overme">
+            {{ row.quantity}}
+          </span>
+        </mat-cell>
+      </ng-container>
+
+
+      <ng-container matColumnDef="price">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> {{"Price" }} </mat-header-cell>
+        <mat-cell *matCellDef="let row" data-label="price">
+          <span class="overme">
+            {{ row.price}}
+          </span>
+        </mat-cell>
+      </ng-container>
+
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 50]" [showFirstLastButtons]="true" [length]="totalSize" pageSize=PageSize
+      (page)="getPaginatorData($event)"></mat-paginator>
+
+  </mat-card-content>
+</mat-card>

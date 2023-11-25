@@ -1,0 +1,10 @@
+/* You can add global styles to this file, and also import other style files */
+.mat-dialog-container {
+  background-color: white;
+}
+.mat-select-panel {
+  background-color: rgb(112, 112, 233);
+}
+.info-card {
+  margin-top: 5%;
+}
