@@ -78,12 +78,18 @@ export class OrderAddEditComponent implements OnInit {
       });
   }
 
-  GetStocks() {
+
+
+  filterMyOptions(text: string) {
+    this.GetStocks(text);
+  }
+  GetStocks(text: string | undefined = undefined) {
 
     const criteria: GetStocksCriteria = new GetStocksCriteria();
     criteria.PagingEnabled = true;
     criteria.PageSize = 5;
     criteria.PageNumber = 0;
+    criteria.FreeText = text;
 
     this.stockService
       .GetStocks(criteria)

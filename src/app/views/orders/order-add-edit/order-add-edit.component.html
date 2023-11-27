@@ -20,8 +20,9 @@
         <mat-select [formControl]="orderForm.controls['StockId']" required>
 
           <mat-option>
-            <ngx-mat-select-search [placeholderLabel]="('Search With Stock Name')"
-              [noEntriesFoundLabel]="('No Matching Records Found')" [formControl]="controlStock" ngDefaultControl>
+            <ngx-mat-select-search (ngModelChange)="filterMyOptions($event)"
+              [placeholderLabel]="('Search With Stock Name')" [noEntriesFoundLabel]="('No Matching Records Found')"
+              [formControl]="controlStock" ngDefaultControl>
             </ngx-mat-select-search>
           </mat-option>
 
