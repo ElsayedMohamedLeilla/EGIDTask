@@ -31,7 +31,7 @@ export class SignalRService extends BaseService {
   }
 
   public StartSignalRConnection = (): void => {
-    debugger
+
     this.hubConnection = new signalR.HubConnectionBuilder()
       .configureLogging(signalR.LogLevel.Debug)
       .withUrl(this.SignalRUrl, {

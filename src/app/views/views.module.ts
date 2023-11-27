@@ -56,8 +56,7 @@ import { StocksComponent } from './stocks/stocks.component';
   declarations: [OrdersComponent, OrderAddEditComponent,AppLoaderComponent,StocksComponent],
   providers: [OrderService, StockService,
  {
-      provide: MatPaginatorIntl,
-      //deps: [TranslateService]
+      provide: MatPaginatorIntl
     }]
 })
 export class ViewsModule { }

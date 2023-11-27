@@ -3,7 +3,6 @@ import { UntypedFormBuilder, Validators, UntypedFormGroup, FormControl } from '@
 import { ToastrService } from 'ngx-toastr';
 import { GetStocksCriteria } from 'src/app/shared/criteria/orders/get-stocks-criteria';
 import { Stock } from 'src/app/shared/models/orders/stock';
-import { GetStocksResponse } from 'src/app/shared/response/orders/get-stocks-response';
 import { Order } from 'src/app/shared/models/orders/order';
 import { OrderService } from 'src/app/shared/services/orders/order.service';
 import { StockService } from 'src/app/shared/services/orders/stock.service';
@@ -37,20 +36,17 @@ export class OrderAddEditComponent implements OnInit {
     private loader: AppLoaderService
   ) { }
 
-
   ngOnInit() {
 
     this.GetStocks();
     this.buildItemForm(this.data.payload)
   }
 
-
   buildItemForm(order: Order) {
     this.orderForm = this.fb.group({
       StockId: [order?.StockId || null, Validators.required],
       PersonName: [order?.PersonName || '', Validators.required],
-      Quantity: [order?.Quantity || null, Validators.required],
-      Price: [order?.Price || 10, Validators.required]
+      Quantity: [order?.Quantity || null, Validators.required]
     })
 
   }
@@ -62,7 +58,6 @@ export class OrderAddEditComponent implements OnInit {
 
     }
   }
-
 
   CreateOrder() {
 
@@ -89,17 +84,13 @@ export class OrderAddEditComponent implements OnInit {
     criteria.PagingEnabled = true;
     criteria.PageSize = 5;
     criteria.PageNumber = 0;
-    debugger
+
     this.stockService
       .GetStocks(criteria)
       .subscribe((response: BaseResponseT<Stock[]>) => {
         if (response && response.state == ResponseStatus.Success) {
           this.stocks = response.data;
-          //this.tempstocks = response.data;
         }
       });
   }
-
-
-
 }

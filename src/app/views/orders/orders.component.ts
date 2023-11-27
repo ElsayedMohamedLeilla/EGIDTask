@@ -83,7 +83,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     criteria.PagingEnabled = this.PagingEnabled;
     criteria.PageNumber = this.PageNumber;
     criteria.PageSize = this.PageSize;
-debugger
+
     this.orderService
       .GetOrders(criteria)
       .subscribe((response: BaseResponseT<Order[]>) => {
@@ -104,34 +104,12 @@ debugger
     let dialogRef: MatDialogRef<any> = this.dialog.open(OrderAddEditComponent, {
       width: '720px',
       disableClose: true,
-      //direction: this.baseServes.GetDiraction(),
       data: { title: title, payload: data, Create: isNew }
     })
     dialogRef.afterClosed()
       .subscribe(res => {
 
         this.GetOrders();
-        /*  if (!res) {
-           // If branch press cancel
-           return;
-         } */
-        /*  if (isNew) {
-           this.loader.open('Adding new Customer');
-           this.branchesService.addItem(res)
-             .subscribe(data => {
-               this.dataSource = data;
-               this.loader.close();
-               this.snack.open('Customer Added!', 'OK', { duration: 4000 });
-             })
-         } else {
-           this.loader.open('Updating Customer');
-           this.branchesService.updateItem(data._id, res)
-             .subscribe(data => {
-               this.dataSource = data;
-               this.loader.close();
-               this.snack.open('Customer Updated!', 'OK', { duration: 4000 })
-             })
-         } */
       })
   }
 

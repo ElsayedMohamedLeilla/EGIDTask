@@ -8,7 +8,7 @@
   </button> -->
 </div>
 <mat-card class="p-0" [@animate]="{value:'*',params:{y:'50px',delay:'300ms'}}">
-  <mat-card-content class="p-0">
+  <mat-card-content *ngIf="!loadingStocks" class="p-0">
     <mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
@@ -75,5 +75,9 @@
     <mat-paginator [pageSizeOptions]="[5, 10, 50]" [showFirstLastButtons]="true" [length]="totalSize" pageSize=PageSize
       (page)="getPaginatorData($event)"></mat-paginator>
 
+  </mat-card-content>
+
+  <mat-card-content *ngIf="loadingStocks" class="p-0">
+    {{"Loading Stocks ....."}}
   </mat-card-content>
 </mat-card>

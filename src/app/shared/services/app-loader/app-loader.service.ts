@@ -20,7 +20,7 @@ export class AppLoaderService {
   }
 
   public close() {
-    debugger
+
     if (this.dialogRef)
       this.dialogRef.close();
   }

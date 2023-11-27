@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
@@ -11,7 +11,6 @@ import { BaseService } from 'src/app/shared/services/baseService';
 import { ResponseStatus } from 'src/app/shared/Enum/response-status';
 import { StockService } from 'src/app/shared/services/orders/stock.service';
 import { GetStocksCriteria } from 'src/app/shared/criteria/orders/get-stocks-criteria';
-import { GetStocksResponse } from 'src/app/shared/response/orders/get-stocks-response';
 import { Stock } from 'src/app/shared/models/orders/stock';
 import { BaseResponseT } from 'src/app/shared/response/base-response-t';
 import { SignalRService } from 'src/app/shared/services/signal-r/signal-r.service';
@@ -28,6 +27,7 @@ export class StocksComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort | any
 
   public dataSource: any;
+  public loadingStocks: boolean = false;
   public displayedColumns: any;
   public PagingEnabled = true;
   public PageNumber = 0;
@@ -51,6 +51,7 @@ export class StocksComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+
     this.displayedColumns = this.getDisplayedColumns();
     this.GetStocks();
 
@@ -60,12 +61,13 @@ export class StocksComponent implements OnInit, OnDestroy {
     if (this.signalRService?.hubConnection?.state != HubConnectionState.Connected) {
       this.signalRService.StartSignalRConnection();
       this.signalRService.SignalRConnectionStartedSubject.subscribe(hubConnection => {
-
+        debugger
         this.hubConnection = this.signalRService.JoinGroup();
         this.HandleNewPricesUpdateOperation();
 
       });
     } else {
+      this.hubConnection = this.signalRService.hubConnection;
       this.HandleNewPricesUpdateOperation();
     }
   }
@@ -103,12 +105,12 @@ export class StocksComponent implements OnInit, OnDestroy {
   GetStocks() {
 
     // this.loader.open("Load Stocks");
-
+    this.loadingStocks = true;
     let criteria: GetStocksCriteria = new GetStocksCriteria();
     criteria.PagingEnabled = this.PagingEnabled;
     criteria.PageNumber = this.PageNumber;
     criteria.PageSize = this.PageSize;
-    debugger
+
     this.stockService
       .GetStocks(criteria)
       .subscribe((response: BaseResponseT<Stock[]>) => {
@@ -116,7 +118,7 @@ export class StocksComponent implements OnInit, OnDestroy {
           this.dataSource = new MatTableDataSource(response.data);
           this.totalSize = response.totalCount;
         }
-        //this.loader.close();
+        this.loadingStocks = false;
       });
   }
 

@@ -26,7 +26,7 @@ export class BaseService {
 
 
   ValidationResult(executionResponse: any) {
-    debugger
+
 
     if (executionResponse.state == ResponseStatus.ValidationError) {
       var mess = "";
@@ -110,7 +110,7 @@ export class BaseService {
   }
 
   handleError<T>(operation = 'operation', result?: T) {
-debugger
+
     return (error: any): Observable<T> => {
       this.toastr.error(UXErrors(error));
       // TODO: better job of transforming error for user consumption
